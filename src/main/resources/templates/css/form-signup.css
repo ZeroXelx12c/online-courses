@@ -30,6 +30,46 @@ h2 {
 .form-group {
     margin-bottom: 15px;
     text-align: left;
+    position: relative;
+}
+/* Bọc input và icon */
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd; /* Đồng bộ màu viền với input */
+    border-radius: 4px; /* Đồng bộ với input */
+    position: relative;
+}
+
+/* Input mật khẩu */
+/* input[type="password"], input[type="text"] { */
+#password, #confirm-password{
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    padding-right: 40px; 
+    width: 100%;
+}
+
+/* Nút toggle mật khẩu (ẩn viền, nền) */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0; 
+    display: flex;
+    align-items: center;
+}
+
+/* Icon */
+.icon {
+    width: 10px;  
+    height: 10px;
+    fill: #666;
+    transition: fill 0.3s ease;
 }
 
 label {
@@ -53,7 +93,7 @@ input {
     display: none;
 }
 
-button {
+#Register {
     width: 100%;
     padding: 10px;
     background-color: #258e01;
@@ -64,17 +104,6 @@ button {
     font-size: 16px;
 }
 
-button:hover {
+#Register:hover {
     background-color: #1e7e00;
-}
-
-.show-password {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.show-password input {
-    width: auto;
-    margin-right: 5px;
 }
