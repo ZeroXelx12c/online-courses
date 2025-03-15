@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập Trình C# Cơ Bản - Chi tiết khóa học</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .course-content {
+            padding-top: 80px;
+            background-color: #f8f9fa;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .video-section {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 45%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+        }
+        
+        .lesson-content {
+            padding: 20px;
+        }
+        
+        .lesson-list {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .lesson-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lesson-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .lesson-item.active {
+            background-color: #e9ecef;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .lesson-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .lesson-duration {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .lesson-description {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .chapter-title {
+            padding: 15px;
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 500;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .nav-buttons {
+            margin-top: 20px;
+        }
+        
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            background-color: var(--primary-dark);
+            color: #fff;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">HỌC LẬP TRÌNH</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dskhoahoc.html">Khóa học</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news.html">Tin tức</a>
+                    </li>
+                </ul>
+                <div class="ms-3">
+                    <span sec:authorize="isAuthenticated()">Xin chào<span th:text="${#authentication.name}"></span></span>
+                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-custom ms-2">Đăng xuất</a>
+                    <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-custom">Đăng nhập</a>
+                    <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline ms-2">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Course Content -->
+    <div class="course-content">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content (80%) -->
+                <div class="col-lg-9">
+                    <!-- Video Section -->
+                    <div class="video-section">
+                        <div class="video-container">
+                            <video controls id="lessonVideo">
+                                <source src="" type="video/mp4">
+                                Trình duyệt của bạn không hỗ trợ thẻ video.
+                            </video>
+                        </div>
+                        <div class="lesson-content">
+                            <h2 id="currentLessonTitle" class="mb-4">Giới thiệu khóa học C#</h2>
+                            <div class="lesson-description">
+                                <h3 class="h5 mb-3">Nội dung bài học</h3>
+                                <p id="lessonDescription" class="mb-4">
+                                    Tìm hiểu về ngôn ngữ lập trình C# và .NET Framework. Khám phá cách C# được sử dụng trong phát triển ứng dụng Windows, web, và game.
+                                </p>
+                                <div class="key-points mb-4">
+                                    <h4 class="h6">Những điểm chính:</h4>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Tổng quan về C# và .NET Framework</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Cài đặt môi trường phát triển</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Tạo project C# đầu tiên</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="nav-buttons d-flex justify-content-between">
+                                <button class="btn btn-custom" id="prevLesson">
+                                    <i class="fas fa-chevron-left"></i> Bài trước
+                                </button>
+                                <button class="btn btn-custom" id="nextLesson">
+                                    Bài tiếp theo <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson List (20%) -->
+                <div class="col-lg-3">
+                    <div class="lesson-list">
+                        <div class="chapter-title">
+                            <i class="fas fa-book me-2"></i>Nội dung khóa học
+                        </div>
+                        <div class="lesson-items">
+                            <div class="lesson-item active">
+                                <div class="lesson-title">1.1 Giới thiệu khóa học</div>
+                                <div class="lesson-duration">
+                                    <i class="far fa-clock me-1"></i>15 phút
+                                </div>
+                            </div>
+                            <div class="lesson-item">
+                                <div class="lesson-title">1.2 Cài đặt Visual Studio</div>
+                                <div class="lesson-duration">
+                                    <i class="far fa-clock me-1"></i>20 phút
+                                </div>
+                            </div>
+                            <div class="lesson-item">
+                                <div class="lesson-title">1.3 Tạo project đầu tiên</div>
+                                <div class="lesson-duration">
+                                    <i class="far fa-clock me-1"></i>25 phút
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Về chúng tôi</h3>
+                        <p>Học Lập trình Online - Nơi chắp cánh ước mơ lập trình viên với các khóa học chất lượng cao.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Liên kết nhanh</h3>
+                        <div class="footer-links">
+                            <a href="/courses">Khóa học</a>
+                            <a href="/news">Tin tức</a>
+                            <a href="/register">Đăng ký</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Kết nối</h3>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Học Lập trình Online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // Lesson navigation
+        document.querySelectorAll('.lesson-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.lesson-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                const title = this.querySelector('.lesson-title').textContent;
+                document.getElementById('currentLessonTitle').textContent = title;
+            });
+        });
+
+        // Navigation buttons
+        document.getElementById('prevLesson').addEventListener('click', function() {
+            const currentLesson = document.querySelector('.lesson-item.active');
+            const prevLesson = currentLesson.previousElementSibling;
+            if (prevLesson && prevLesson.classList.contains('lesson-item')) {
+                currentLesson.classList.remove('active');
+                prevLesson.classList.add('active');
+                document.getElementById('currentLessonTitle').textContent = 
+                    prevLesson.querySelector('.lesson-title').textContent;
+            }
+        });
+
+        document.getElementById('nextLesson').addEventListener('click', function() {
+            const currentLesson = document.querySelector('.lesson-item.active');
+            const nextLesson = currentLesson.nextElementSibling;
+            if (nextLesson && nextLesson.classList.contains('lesson-item')) {
+                currentLesson.classList.remove('active');
+                nextLesson.classList.add('active');
+                document.getElementById('currentLessonTitle').textContent = 
+                    nextLesson.querySelector('.lesson-title').textContent;
+            }
+        });
+    </script>
+</body>
+</html>
