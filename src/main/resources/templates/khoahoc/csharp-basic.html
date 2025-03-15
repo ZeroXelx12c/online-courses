@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lập Trình C# Cơ Bản - Học Lập trình Online</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">HỌC LẬP TRÌNH</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dskhoahoc.html">Khóa học</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news.html">Tin tức</a>
+                    </li>
+                </ul>
+                <div class="ms-3">
+                    <span sec:authorize="isAuthenticated()">Xin chào<span th:text="${#authentication.name}"></span></span>
+                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-custom ms-2">Đăng xuất</a>
+                    <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-custom">Đăng nhập</a>
+                    <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline ms-2">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Course Content -->
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title">Lập Trình C# Cơ Bản</h1>
+                        <p class="text-muted">Khóa học C# cơ bản giúp bạn nắm vững nền tảng, cấu trúc và cách sử dụng ngôn ngữ lập trình C#. Khóa học phù hợp cho người mới bắt đầu với .NET Framework.</p>
+                        
+                        <h2 class="mt-4">Bạn sẽ học được gì?</h2>
+                        <ul class="list-unstyled mt-3">
+                            <li class="mb-2">✓ Hiểu rõ về cú pháp và cấu trúc của ngôn ngữ C#</li>
+                            <li class="mb-2">✓ Nắm vững về lập trình hướng đối tượng (OOP) trong C#</li>
+                            <li class="mb-2">✓ Thực hành với các bài tập thực tế và ví dụ cụ thể</li>
+                            <li class="mb-2">✓ Làm việc với cơ sở dữ liệu và xử lý file trong C#</li>
+                            <li class="mb-2">✓ Xây dựng được các ứng dụng Console đơn giản</li>
+                        </ul>
+                        
+                        <h2 class="mt-4">Nội dung khóa học</h2>
+                        <p class="text-muted">8 chương • 42 bài học • Thời lượng 08 giờ 30 phút</p>
+                        
+                        <div class="mt-4">
+                            <h3 class="h5">Các chủ đề chính:</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">📚 Giới thiệu về C# và .NET Framework</li>
+                                <li class="mb-2">📚 Biến, kiểu dữ liệu và toán tử</li>
+                                <li class="mb-2">📚 Cấu trúc điều khiển và vòng lặp</li>
+                                <li class="mb-2">📚 Mảng và Collections</li>
+                                <li class="mb-2">📚 Lập trình hướng đối tượng với C#</li>
+                                <li class="mb-2">📚 Xử lý ngoại lệ và Debug</li>
+                                <li class="mb-2">📚 File I/O và cơ sở dữ liệu</li>
+                                <li class="mb-2">📚 Dự án thực tế</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <video controls class="w-100 rounded mb-3">
+                            <source src="/video/csharp-intro.mp4" type="video/mp4">
+                            Trình duyệt của bạn không hỗ trợ thẻ video.
+                        </video>
+                        <h3 class="text-danger mb-3">Miễn phí</h3>
+                        <button class="btn btn-primary w-100 mb-4">Đăng ký học</button>
+                        
+                        <ul class="list-unstyled text-start">
+                            <li class="mb-2"><i class="fas fa-flag"></i> Trình độ cơ bản</li>
+                            <li class="mb-2"><i class="fas fa-book"></i> Tổng số 42 bài học</li>
+                            <li class="mb-2"><i class="fas fa-clock"></i> Thời lượng 08 giờ 30 phút</li>
+                            <li class="mb-2"><i class="fas fa-globe"></i> Học mọi lúc, mọi nơi</li>
+                            <li class="mb-2"><i class="fas fa-certificate"></i> Được cấp chứng chỉ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Về chúng tôi</h3>
+                        <p>Học Lập trình Online - Nơi chắp cánh ước mơ lập trình viên với các khóa học chất lượng cao.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Liên kết nhanh</h3>
+                        <div class="footer-links">
+                            <a href="/courses">Khóa học</a>
+                            <a href="/news">Tin tức</a>
+                            <a href="/register">Đăng ký</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Kết nối</h3>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Học Lập trình Online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>
