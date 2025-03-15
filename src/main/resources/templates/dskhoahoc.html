@@ -64,16 +64,10 @@
                 </div>
             </div>
 
-            <!-- Filter Bar -->
+            Filter Bar
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="d-flex justify-content-center flex-wrap" id="filterBar">
-                        <select class="form-select me-3 mb-2" id="yearFilter" style="width: auto;" data-aos="fade-up">
-                            <option selected value="">Năm xuất bản</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                        </select>
                         <select class="form-select me-3 mb-2" id="topicFilter" style="width: auto;" data-aos="fade-up">
                             <option selected value="">Chủ đề</option>
                             <option value="web">Lập trình Web</option>
@@ -84,6 +78,19 @@
                             <option selected value="">Phí học</option>
                             <option value="free">Miễn phí</option>
                             <option value="paid">Trả phí</option>
+                        </select>
+                        <select class="form-select me-3 mb-2" id="languageFilter" style="width: auto;" data-aos="fade-up">
+                            <option selected value="">Ngôn ngữ</option>
+                            <option value="C">C</option>
+                            <option value="CSS">CSS</option>
+                            <option value="C#">C#</option>
+                            <option value="C++">C++</option>
+                            <option value="Java">Java</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="Python">Python</option>
+                            <option value="R">R</option>
+                            <option value="Solidity">Solidity</option>
+                            <option value="SQL">SQL</option>
                         </select>
                     </div>
                 </div>
@@ -109,34 +116,114 @@
             {
                 title: "Lập trình Web cơ bản",
                 description: "Khóa học lập trình web cơ bản dành cho người mới bắt đầu.",
-                year: "2023",
                 topic: "web",
                 fee: "free",
+                language: ["HTML", "CSS", "JavaScript"],
                 image: "/images/course1.jpg"
             },
             {
                 title: "Lập trình Mobile nâng cao",
                 description: "Khóa học lập trình mobile nâng cao với các công nghệ mới nhất.",
-                year: "2022",
                 topic: "mobile",
                 fee: "paid",
+                language: ["Java", "Kotlin"],
                 image: "/images/course2.jpg"
             },
             {
                 title: "Khoa học dữ liệu cơ bản",
                 description: "Khóa học khoa học dữ liệu cơ bản dành cho người mới bắt đầu.",
-                year: "2021",
                 topic: "data",
                 fee: "free",
+                language: ["Python", "SQL"],
                 image: "/images/course3.jpg"
             },
             {
                 title: "Khoa học dữ liệu cơ bản",
                 description: "Khóa học khoa học dữ liệu cơ bản dành cho người mới bắt đầu.",
-                year: "2021",
                 topic: "data",
                 fee: "free",
+                language: ["Python", "R"],
                 image: "/images/course3.jpg"
+            },
+            {
+                title: "Phát triển Game với Unity",
+                description: "Học cách tạo game 2D và 3D với Unity Engine.",
+                topic: "game",
+                fee: "paid",
+                language: ["C#", "JavaScript"],
+                image: "/images/course4.jpg"
+            },
+            {
+                title: "Lập trình Python cho AI",
+                description: "Khóa học về trí tuệ nhân tạo và máy học với Python.",
+                topic: "data",
+                fee: "paid",
+                language: ["Python", "SQL"],
+                image: "/images/course5.jpg"
+            },
+            {
+                title: "Phát triển ứng dụng React Native",
+                description: "Xây dựng ứng dụng di động đa nền tảng với React Native.",
+                topic: "mobile",
+                fee: "paid",
+                language: ["JavaScript", "CSS"],
+                image: "/images/course6.jpg"
+            },
+            {
+                title: "Backend Development với Node.js",
+                description: "Xây dựng REST API và server-side applications.",
+                topic: "web",
+                fee: "free",
+                language: ["JavaScript", "SQL"],
+                image: "/images/course7.jpg"
+            },
+            {
+                title: "Lập trình IoT với Arduino",
+                description: "Học lập trình các thiết bị IoT và sensors.",
+                topic: "iot",
+                fee: "paid",
+                language: ["C++", "Python"],
+                image: "/images/course8.jpg"
+            },
+            {
+                title: "Full Stack Java Development",
+                description: "Phát triển ứng dụng web đầy đủ với Java Spring Boot.",
+                topic: "web",
+                fee: "paid",
+                language: ["Java", "SQL"],
+                image: "/images/course9.jpg"
+            },
+            {
+                title: "Android App Development",
+                description: "Phát triển ứng dụng Android native với Kotlin.",
+                topic: "mobile",
+                fee: "free",
+                language: ["Kotlin", "Java"],
+                image: "/images/course10.jpg"
+            },
+            {
+                title: "DevOps Fundamentals",
+                description: "Học về CI/CD, Docker và Kubernetes.",
+                topic: "devops",
+                fee: "paid",
+                language: ["Python", "JavaScript"],
+                image: "/images/course11.jpg"
+            },
+            {
+                title: "Blockchain Development",
+                description: "Phát triển ứng dụng blockchain và smart contracts.",
+                topic: "blockchain",
+                fee: "paid",
+                language: ["JavaScript", "Solidity"],
+                image: "/images/course12.jpg"
+            },
+            {
+                title: "Network Security",
+                description: "Bảo mật mạng và penetration testing cơ bản.",
+                topic: "security",
+                fee: "free",
+                language: ["Python", "C"],
+                image: "/images/course13.jpg"
             }
         ];
 
@@ -152,9 +239,9 @@
                             <div class="card-body">
                                 <h5 class="card-title">${course.title}</h5>
                                 <p class="card-text">${course.description}</p>
-                                <p class="card-text"><small class="text-muted">Năm xuất bản: ${course.year}</small></p>
                                 <p class="card-text"><small class="text-muted">Chủ đề: ${course.topic}</small></p>
                                 <p class="card-text"><small class="text-muted">Phí học: ${course.fee}</small></p>
+                                <p class="card-text"><small class="text-muted">Ngôn ngữ: ${course.language}</small></p>
                             </div>
                         </div>
                     </div>
@@ -165,18 +252,17 @@
 
         function filterCourses() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const yearFilter = document.getElementById('yearFilter').value;
             const topicFilter = document.getElementById('topicFilter').value;
             const feeFilter = document.getElementById('feeFilter').value;
-
+            const languageFilter = document.getElementById('languageFilter').value;
             const filteredCourses = courses.filter(course => {
                 const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
                                     course.description.toLowerCase().includes(searchTerm);
-                const matchesYear = yearFilter ? course.year === yearFilter : true;
                 const matchesTopic = topicFilter ? course.topic === topicFilter : true;
                 const matchesFee = feeFilter ? course.fee === feeFilter : true;
+                const matchesLanguage = languageFilter ? (course.language && course.language.includes(languageFilter)) : true;
 
-                return matchesSearch && matchesYear && matchesTopic && matchesFee;
+                return matchesSearch && matchesTopic && matchesFee&&matchesLanguage;
             });
 
             displayCourses(filteredCourses);
@@ -184,9 +270,9 @@
 
         // Add event listeners for real-time filtering
         document.getElementById('searchInput').addEventListener('input', filterCourses);
-        document.getElementById('yearFilter').addEventListener('change', filterCourses);
         document.getElementById('topicFilter').addEventListener('change', filterCourses);
         document.getElementById('feeFilter').addEventListener('change', filterCourses);
+        document.getElementById('languageFilter').addEventListener('change', filterCourses);
 
         // Initial display of all courses
         displayCourses(courses);
