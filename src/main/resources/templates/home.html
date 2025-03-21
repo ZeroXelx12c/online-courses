@@ -298,7 +298,10 @@
                 </ul>
                 <div class="ms-3">
                     <span sec:authorize="isAuthenticated()">Xin chào, <span th:text="${#authentication.name}"></span></span>
-                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-custom ms-2">Đăng xuất</a>
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display: inline;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-custom ms-2">Đăng xuất</button>
+                    </form>
                     <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-custom">Đăng nhập</a>
                     <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline ms-2">Đăng ký</a>
                 </div>
