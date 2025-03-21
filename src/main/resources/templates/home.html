@@ -10,179 +10,271 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/header.css">
-    <link rel="stylesheet" href="./css/footer.css">
     <style>
-:root {
-  --primary-color: #258e01;
-  --secondary-color: #1a1a1a;
-}
+        :root {
+            --primary-color: #258e01;
+            --secondary-color: #1a1a1a;
+        }
 
-body {
-  background-color: #fff;
-  color: #333;
-  font-family: "Montserrat", sans-serif;
-}
+        body {
+            background-color: #fff;
+            color: #333;
+            font-family: "Montserrat", sans-serif;
+        }
 
-.hero {
-  height: 80vh;
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url("/src/main/resources/static/img/image.png") center/cover;
-}
+        /* header.css */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
 
-.hero-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  width: 100%;
-  padding: 0 20px;
-}
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
 
-.hero-title {
-  font-size: 4rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: #fff;
-}
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
 
-.hero-subtitle {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
-  color: #fff;
-}
+        .nav-link {
+            color: #333 !important;
+            margin: 0 15px;
+            position: relative;
+            font-weight: 500;
+        }
 
-.featured-courses {
-  padding: 100px 0;
-  background-color: #f8f9fa;
-}
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
 
-.section-title {
-  text-align: center;
-  margin-bottom: 50px;
-}
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
-.section-title h2 {
-  color: var(--primary-color);
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
+        .hero {
+            height: 80vh;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+                url("/src/main/resources/static/img/image.png") center/cover; /* Sửa đường dẫn cho Spring Boot */
+        }
 
-.course-card {
-  background: #fff;
-  border-radius: 15px;
-  overflow: hidden;
-  margin-bottom: 30px;
-  transition: transform 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+        }
 
-.course-card:hover {
-  transform: translateY(-10px);
-}
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #fff;
+        }
 
-.course-image {
-  height: 200px;
-  overflow: hidden;
-}
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
 
-.course-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
+        .featured-courses {
+            padding: 100px 0;
+            background-color: #f8f9fa;
+        }
 
-.course-card:hover .course-image img {
-  transform: scale(1.1);
-}
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
 
-.course-details {
-  padding: 20px;
-}
+        .section-title h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
 
-.course-title {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: var(--primary-color);
-}
+        .course-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
 
-.course-price {
-  font-size: 1.2rem;
-  color: #333;
-  margin-bottom: 15px;
-}
+        .course-card:hover {
+            transform: translateY(-10px);
+        }
 
-.btn-custom {
-  background-color: var(--primary-color);
-  color: #fff;
-  padding: 12px 30px;
-  border-radius: 30px;
-  border: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
+        .course-image {
+            height: 200px;
+            overflow: hidden;
+        }
 
-.btn-custom:hover {
-  background-color: #218838;
-  color: #fff;
-  transform: translateY(-2px);
-}
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
 
-.btn-outline {
-  background-color: transparent;
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
-}
+        .course-card:hover .course-image img {
+            transform: scale(1.1);
+        }
 
-.btn-outline:hover {
-  background-color: var(--primary-color);
-  color: #fff;
-}
+        .course-details {
+            padding: 20px;
+        }
 
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  .hero-subtitle {
-    font-size: 1.2rem;
-  }
-  .btn-custom {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-}
+        .course-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
 
-.course-rating {
-  margin-bottom: 10px;
-}
+        .course-price {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
 
-.course-rating .fas.fa-star {
-  color: #facc15;
-}
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
 
-.course-rating .far.fa-star {
-  color: #d1d5db;
-}
+        .btn-custom:hover {
+            background-color: #218838;
+            color: #fff;
+            transform: translateY(-2px);
+        }
 
-.course-rating span {
-  font-size: 0.9rem;
-  margin-left: 5px;
-}
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
 
-.course-details p {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 15px;
-  line-height: 1.4;
-}
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .course-rating {
+            margin-bottom: 10px;
+        }
+
+        .course-rating .fas.fa-star {
+            color: #facc15;
+        }
+
+        .course-rating .far.fa-star {
+            color: #d1d5db;
+        }
+
+        .course-rating span {
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .course-details p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* footer.css */
+        .footer {
+            background-color: #1a1a1a;
+            padding: 50px 0 20px;
+            color: #fff;
+        }
+
+        .footer-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: #888;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .btn-custom {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .navbar-brand {
+                font-size: 24px;
+            }
+            .nav-link {
+                margin: 5px 0;
+            }
+        }
     </style>
-
 </head>
 <body>
     <!-- Navigation -->

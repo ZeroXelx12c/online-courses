@@ -1,198 +1,395 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập - Học Lập trình Online</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #258e01;
             --secondary-color: #1a1a1a;
-            --white: #fff;
-            --gray-100: #f0f2f5;
-            --gray-200: #e9ecef;
-            --gray-300: #ddd;
-            --gray-600: #666;
-            --gray-800: #333;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: var(--gray-100);
-            background-image: linear-gradient(135deg, #f0f2f5 0%, #e0e5ec 100%);
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: "Montserrat", sans-serif;
         }
 
-        .login-container {
-            background-color: var(--white);
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            transform: translateY(0);
+        /* Header CSS từ home.html */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
             transition: all 0.3s ease;
         }
 
-        .login-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        .navbar.scrolled {
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
-        .logo {
-            max-width: 80px;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease;
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color) !important;
         }
 
-        .logo:hover {
-            transform: scale(1.1);
-        }
-
-        h2 {
-            margin-bottom: 1.5rem;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
+        .nav-link {
+            color: #333 !important;
+            margin: 0 15px;
             position: relative;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--gray-800);
             font-weight: 500;
-            font-size: 0.9rem;
         }
 
-        .input-group {
-            position: relative;
-        }
-
-        .input-group i {
+        .nav-link::after {
+            content: '';
             position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-600);
-            transition: color 0.3s ease;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
         }
 
-        input {
+        .nav-link:hover::after {
             width: 100%;
-            padding: 1rem 1rem 1rem 2.5rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 30px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: var(--white);
         }
 
-        input:focus {
-            outline: none;
+        /* Login Section */
+        .login-section {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .login-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            color: #333;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(37, 142, 1, 0.1);
+            box-shadow: 0 0 0 0.2rem rgba(37, 142, 1, 0.25);
         }
 
-        input:focus + i {
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .input-group-text {
+            background-color: #fff;
+            border: 1px solid #ddd;
             color: var(--primary-color);
         }
 
-        button {
-            width: 100%;
-            padding: 1rem;
+        .btn-custom {
             background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
+            color: #fff;
+            padding: 12px 30px;
             border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
+            border: none;
+            font-weight: 500;
             transition: all 0.3s ease;
-            margin-top: 1rem;
         }
 
-        button:hover {
-            background-color: #1a6801;
+        .btn-custom:hover {
+            background-color: #218838;
+            color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 142, 1, 0.3);
         }
 
-        .register-link {
-            margin-top: 1.5rem;
-            color: var(--gray-600);
-            font-size: 0.9rem;
-        }
-
-        .register-link a {
+        .btn-social {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary-color);
             color: var(--primary-color);
+            background: #fff;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .btn-social:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .form-check-label {
+            color: #666;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: #00cc00;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Footer CSS từ home.html */
+        .footer {
+            background-color: #1a1a1a;
+            padding: 50px 0 20px;
+            color: #fff;
+        }
+
+        .footer-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links a {
+            color: #888;
             text-decoration: none;
-            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
             transition: color 0.3s ease;
         }
 
-        .register-link a:hover {
-            color: #1a6801;
-            text-decoration: underline;
+        .footer-links a:hover {
+            color: var(--primary-color);
         }
 
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 2rem;
-                margin: 1rem;
-            }
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
 
-            h2 {
+        .social-links a {
+            color: #888;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 24px;
+            }
+            .nav-link {
+                margin: 5px 0;
+            }
+            .login-title {
                 font-size: 1.5rem;
             }
-
-            input {
-                font-size: 0.9rem;
+            .btn-custom {
+                width: 100%;
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <img src="/img/Annotation 2025-03-05 171514.png" alt="Logo" class="logo">
-        <h2>Đăng nhập</h2>
-        <form method="post" th:action="@{/login}">
-            <div class="form-group">
-                <label for="username">Tên đăng nhập</label>
-                <div class="input-group">
-                    <input type="text" id="username" name="username" required autocomplete="username">
-                    <i class="fas fa-user"></i>
+    <!-- Navigation (từ home.html) -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">HỌC LẬP TRÌNH</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/courses">Khóa học</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news">Tin tức</a>
+                    </li>
+                </ul>
+                <div class="ms-3">
+                    <span sec:authorize="isAuthenticated()">Xin chào, <span th:text="${#authentication.name}"></span></span>
+                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-custom ms-2">Đăng xuất</a>
+                    <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-custom">Đăng nhập</a>
+                    <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline ms-2">Đăng ký</a>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password">Mật khẩu</label>
-                <div class="input-group">
-                    <input type="password" id="password" name="password" required autocomplete="current-password">
-                    <i class="fas fa-lock"></i>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="login-card" data-aos="fade-up">
+                        <div class="login-title">Đăng nhập</div>
+
+                        <!-- Thông báo lỗi hoặc thành công -->
+                        <div th:if="${param.error}" class="error-message">
+                            Tên tài khoản hoặc mật khẩu không đúng!
+                        </div>
+                        <div th:if="${param.logout}" class="success-message">
+                            Bạn đã đăng xuất thành công!
+                        </div>
+                        <div th:if="${param.success == 'register'}" class="success-message">
+                            Đăng ký thành công! Vui lòng đăng nhập.
+                        </div>
+
+                        <!-- Form đăng nhập -->
+                        <form th:action="@{/login}" method="post" data-aos="fade-up" data-aos-delay="200">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <div class="form-group mb-3">
+                                <label for="username">Tên tài khoản</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input type="text" class="form-control" id="username" name="username" 
+                                           placeholder="Nhập tên tài khoản" required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password">Mật khẩu</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" name="password" 
+                                           placeholder="Nhập mật khẩu" required>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me">
+                                        <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+                                    </div>
+                                    <a th:href="@{/forgot-password}" class="text-primary">Quên mật khẩu?</a>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-custom">
+                                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
+                            <p class="text-muted mb-3">Hoặc đăng nhập với</p>
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#" class="btn btn-social" onclick="loginWithFacebook()">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="btn btn-social" onclick="loginWithGoogle()">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="400">
+                            <p class="text-muted">Chưa có tài khoản? 
+                                <a th:href="@{/register}" class="text-primary">Đăng ký ngay</a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button type="submit">Đăng nhập</button>
-        </form>
-        <p class="register-link">
-            Chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
-        </p>
-    </div>
+        </div>
+    </section>
+
+    <!-- Footer (từ home.html) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Về chúng tôi</h3>
+                        <p>Học Lập trình Online - Nơi chắp cánh ước mơ lập trình viên với các khóa học chất lượng cao.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Liên kết nhanh</h3>
+                        <div class="footer-links">
+                            <a href="/courses">Khóa học</a>
+                            <a href="/news">Tin tức</a>
+                            <a href="/register">Đăng ký</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Kết nối</h3>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Học Lập trình Online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true });
+        function loginWithFacebook() { console.log("Login with Facebook"); }
+        function loginWithGoogle() { console.log("Login with Google"); }
+    </script>
 </body>
 </html>
