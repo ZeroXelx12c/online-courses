@@ -1,137 +1,169 @@
 :root {
-    --primary-color: #258e01;
-    --secondary-color: #1a1a1a;
+  --primary-color: #258e01;
+  --secondary-color: #1a1a1a;
 }
 
 body {
-    background-color: #fff;
-    color: #333;
-    font-family: 'Montserrat', sans-serif;
+  background-color: #fff;
+  color: #333;
+  font-family: "Montserrat", sans-serif;
 }
 
 .hero {
-    height: 80vh;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-                url('../img/image.png') center/cover;
+  height: 80vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("/img/image.png") center/cover;
 }
 
 .hero-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 100%;
-    padding: 0 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .hero-title {
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: #fff;
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #fff;
 }
 
 .hero-subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
-    color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: #fff;
 }
 
 .featured-courses {
-    padding: 100px 0;
-    background-color: #f8f9fa;
+  padding: 100px 0;
+  background-color: #f8f9fa;
 }
 
 .section-title {
-    text-align: center;
-    margin-bottom: 50px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .section-title h2 {
-    color: var(--primary-color);
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
 .course-card {
-    background: #fff;
-    border-radius: 15px;
-    overflow: hidden;
-    margin-bottom: 30px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .course-card:hover {
-    transform: translateY(-10px);
+  transform: translateY(-10px);
 }
 
 .course-image {
-    height: 200px;
-    overflow: hidden;
+  height: 200px;
+  overflow: hidden;
 }
 
 .course-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .course-card:hover .course-image img {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .course-details {
-    padding: 20px;
+  padding: 20px;
 }
 
 .course-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--primary-color);
 }
 
 .course-price {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .btn-custom {
-    background-color: var(--primary-color);
-    color: #fff;
-    padding: 12px 30px;
-    border-radius: 30px;
-    border: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .btn-custom:hover {
-    background-color: #218838;
-    color: #fff;
-    transform: translateY(-2px);
+  background-color: #218838;
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 .btn-outline {
-    background-color: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
 .btn-outline:hover {
-    background-color: var(--primary-color);
-    color: #fff;
+  background-color: var(--primary-color);
+  color: #fff;
 }
 
 @media (max-width: 768px) {
-    .hero-title { font-size: 2.5rem; }
-    .hero-subtitle { font-size: 1.2rem; }
-    .btn-custom { width: 100%; margin-bottom: 10px; }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  .btn-custom {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* Thêm định dạng cho đánh giá sao và mô tả ngắn */
+.course-rating {
+  margin-bottom: 10px;
+}
+
+.course-rating .fas.fa-star {
+  color: #facc15; /* Vàng cho sao đầy */
+}
+
+.course-rating .far.fa-star {
+  color: #d1d5db; /* Xám cho sao rỗng */
+}
+
+.course-rating span {
+  font-size: 0.9rem;
+  margin-left: 5px;
+}
+
+.course-details p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.4;
 }
