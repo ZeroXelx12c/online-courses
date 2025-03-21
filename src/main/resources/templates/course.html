@@ -10,10 +10,281 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-   
-    <link href="./css/header.css" rel="stylesheet">
-    <link href="./css/footer.css" rel="stylesheet">
-    <link href="./css/course-list.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #258e01;
+            --secondary-color: #1a1a1a;
+            --white: #fff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-600: #666;
+            --gray-800: #333;
+        }
+
+        /* Base Styles */
+        body {
+            background-color: var(--white);
+            color: var(--gray-800);
+            font-family: 'Montserrat', sans-serif;
+            padding-top: 80px;
+        }
+
+        /* Header/Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: var(--gray-800) !important;
+            margin: 0 15px;
+            position: relative;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                        url('/images/index1.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -80px;
+            margin-bottom: 40px;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 28px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Search and Filter Section */
+        .search-filter-section {
+            background-color: var(--gray-100);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 30px;
+            padding: 12px 20px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 0.2rem rgba(37, 142, 1, 0.25);
+            border-color: var(--primary-color);
+        }
+
+        .form-select {
+            background-position: right 20px center;
+            cursor: pointer;
+        }
+
+        /* Course Grid */
+        .course-grid-section {
+            padding: 40px 0;
+        }
+
+        .course-grid-section .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .course-grid-section .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-grid-section .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .course-grid-section .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .course-grid-section .card-body {
+            padding: 1.5rem;
+        }
+
+        .course-grid-section .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .course-grid-section .card-text {
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .course-grid-section .text-muted {
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--secondary-color);
+            padding: 60px 0 20px;
+            color: var(--white);
+            margin-top: 60px;
+        }
+
+        .footer-title {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .footer-content p {
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            padding: 4px 0;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #888;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            padding: 8px;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            margin-top: 40px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar-brand { 
+                font-size: 24px; 
+            }
+            
+            .nav-link { 
+                margin: 8px 0; 
+            }
+            
+            .btn-custom, .btn-outline { 
+                width: 100%; 
+                margin: 5px 0;
+            }
+            
+            .search-filter-section {
+                padding: 20px;
+            }
+            
+            .form-select {
+                width: 100% !important;
+                margin-bottom: 10px;
+            }
+            
+            .hero {
+                height: 150px;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -36,10 +307,12 @@
                     </li>
                 </ul>
                 <div class="ms-3">
-                    <span sec:authorize="isAuthenticated()">Xin chào<span th:text="${#authentication.name}"></span></span>
-                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-custom ms-2">Đăng xuất</a>
+                    <span sec:authorize="isAuthenticated()" class="me-2">
+                        Xin chào <span th:text="${#authentication.name}" class="fw-bold text-primary"></span>
+                    </span>
+                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-custom">Đăng xuất</a>
                     <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-custom">Đăng nhập</a>
-                    <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline ms-2">Đăng ký</a>
+                    <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline">Đăng ký</a>
                 </div>
             </div>
         </div>
@@ -47,39 +320,36 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        
     </section>
 
-    <!-- Navigation and Hero Section (same as before) -->
-
     <!-- Search and Filter Section -->
-    <section class="search-filter-section py-5">
+    <section class="search-filter-section">
         <div class="container">
             <!-- Search Bar -->
             <div class="row mb-4">
                 <div class="col-md-8 offset-md-2">
                     <form class="d-flex" id="searchForm" data-aos="fade-up">
-                        <input class="form-control me-2" type="search" id="searchInput" placeholder="Tìm kiếm khóa học..." aria-label="Search">
+                        <input class="form-control" type="search" id="searchInput" placeholder="Tìm kiếm khóa học..." aria-label="Search">
                     </form>
                 </div>
             </div>
 
-            Filter Bar
-            <div class="row mb-4">
+            <!-- Filter Bar -->
+            <div class="row">
                 <div class="col-md-12">
-                    <div class="d-flex justify-content-center flex-wrap" id="filterBar">
-                        <select class="form-select me-3 mb-2" id="topicFilter" style="width: auto;" data-aos="fade-up">
+                    <div class="d-flex justify-content-center flex-wrap gap-3" id="filterBar">
+                        <select class="form-select" id="topicFilter" style="width: auto;" data-aos="fade-up">
                             <option selected value="">Chủ đề</option>
                             <option value="web">Lập trình Web</option>
                             <option value="mobile">Lập trình Mobile</option>
                             <option value="data">Khoa học dữ liệu</option>
                         </select>
-                        <select class="form-select me-3 mb-2" id="feeFilter" style="width: auto;" data-aos="fade-up">
+                        <select class="form-select" id="feeFilter" style="width: auto;" data-aos="fade-up">
                             <option selected value="">Phí học</option>
                             <option value="free">Miễn phí</option>
                             <option value="paid">Trả phí</option>
                         </select>
-                        <select class="form-select me-3 mb-2" id="languageFilter" style="width: auto;" data-aos="fade-up">
+                        <select class="form-select" id="languageFilter" style="width: auto;" data-aos="fade-up">
                             <option selected value="">Ngôn ngữ</option>
                             <option value="C">C</option>
                             <option value="CSS">CSS</option>
@@ -99,184 +369,13 @@
     </section>
 
     <!-- Course Grid Section -->
-    <section class="course-grid-section py-5" data-aos="fade-up">
+    <section class="course-grid-section">
         <div class="container">
             <div class="row row-cols-1 row-cols-md-3 g-4" id="courseGrid">
                 <!-- Course Cards will be dynamically populated here -->
             </div>
         </div>
     </section>
-
-    <!-- Footer (same as before) -->
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const courses = [
-            {
-                title: "Lập trình Web cơ bản",
-                description: "Khóa học lập trình web cơ bản dành cho người mới bắt đầu.",
-                topic: "web",
-                fee: "free",
-                language: ["HTML", "CSS", "JavaScript"],
-                image: "/images/course1.jpg"
-            },
-            {
-                title: "Lập trình Mobile nâng cao",
-                description: "Khóa học lập trình mobile nâng cao với các công nghệ mới nhất.",
-                topic: "mobile",
-                fee: "paid",
-                language: ["Java", "Kotlin"],
-                image: "/images/course2.jpg"
-            },
-            {
-                title: "Khoa học dữ liệu cơ bản",
-                description: "Khóa học khoa học dữ liệu cơ bản dành cho người mới bắt đầu.",
-                topic: "data",
-                fee: "free",
-                language: ["Python", "SQL"],
-                image: "/images/course3.jpg"
-            },
-            {
-                title: "Khoa học dữ liệu cơ bản",
-                description: "Khóa học khoa học dữ liệu cơ bản dành cho người mới bắt đầu.",
-                topic: "data",
-                fee: "free",
-                language: ["Python", "R"],
-                image: "/images/course3.jpg"
-            },
-            {
-                title: "Phát triển Game với Unity",
-                description: "Học cách tạo game 2D và 3D với Unity Engine.",
-                topic: "game",
-                fee: "paid",
-                language: ["C#", "JavaScript"],
-                image: "/images/course4.jpg"
-            },
-            {
-                title: "Lập trình Python cho AI",
-                description: "Khóa học về trí tuệ nhân tạo và máy học với Python.",
-                topic: "data",
-                fee: "paid",
-                language: ["Python", "SQL"],
-                image: "/images/course5.jpg"
-            },
-            {
-                title: "Phát triển ứng dụng React Native",
-                description: "Xây dựng ứng dụng di động đa nền tảng với React Native.",
-                topic: "mobile",
-                fee: "paid",
-                language: ["JavaScript", "CSS"],
-                image: "/images/course6.jpg"
-            },
-            {
-                title: "Backend Development với Node.js",
-                description: "Xây dựng REST API và server-side applications.",
-                topic: "web",
-                fee: "free",
-                language: ["JavaScript", "SQL"],
-                image: "/images/course7.jpg"
-            },
-            {
-                title: "Lập trình IoT với Arduino",
-                description: "Học lập trình các thiết bị IoT và sensors.",
-                topic: "iot",
-                fee: "paid",
-                language: ["C++", "Python"],
-                image: "/images/course8.jpg"
-            },
-            {
-                title: "Full Stack Java Development",
-                description: "Phát triển ứng dụng web đầy đủ với Java Spring Boot.",
-                topic: "web",
-                fee: "paid",
-                language: ["Java", "SQL"],
-                image: "/images/course9.jpg"
-            },
-            {
-                title: "Android App Development",
-                description: "Phát triển ứng dụng Android native với Kotlin.",
-                topic: "mobile",
-                fee: "free",
-                language: ["Kotlin", "Java"],
-                image: "/images/course10.jpg"
-            },
-            {
-                title: "DevOps Fundamentals",
-                description: "Học về CI/CD, Docker và Kubernetes.",
-                topic: "devops",
-                fee: "paid",
-                language: ["Python", "JavaScript"],
-                image: "/images/course11.jpg"
-            },
-            {
-                title: "Blockchain Development",
-                description: "Phát triển ứng dụng blockchain và smart contracts.",
-                topic: "blockchain",
-                fee: "paid",
-                language: ["JavaScript", "Solidity"],
-                image: "/images/course12.jpg"
-            },
-            {
-                title: "Network Security",
-                description: "Bảo mật mạng và penetration testing cơ bản.",
-                topic: "security",
-                fee: "free",
-                language: ["Python", "C"],
-                image: "/images/course13.jpg"
-            }
-        ];
-
-        function displayCourses(filteredCourses) {
-            const courseGrid = document.getElementById('courseGrid');
-            courseGrid.innerHTML = ''; // Clear existing courses
-
-            filteredCourses.forEach(course => {
-                const courseCard = `
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="${course.image}" class="card-img-top" alt="${course.title}">
-                            <div class="card-body">
-                                <h5 class="card-title">${course.title}</h5>
-                                <p class="card-text">${course.description}</p>
-                                <p class="card-text"><small class="text-muted">Chủ đề: ${course.topic}</small></p>
-                                <p class="card-text"><small class="text-muted">Phí học: ${course.fee}</small></p>
-                                <p class="card-text"><small class="text-muted">Ngôn ngữ: ${course.language}</small></p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                courseGrid.innerHTML += courseCard;
-            });
-        }
-
-        function filterCourses() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const topicFilter = document.getElementById('topicFilter').value;
-            const feeFilter = document.getElementById('feeFilter').value;
-            const languageFilter = document.getElementById('languageFilter').value;
-            const filteredCourses = courses.filter(course => {
-                const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
-                                    course.description.toLowerCase().includes(searchTerm);
-                const matchesTopic = topicFilter ? course.topic === topicFilter : true;
-                const matchesFee = feeFilter ? course.fee === feeFilter : true;
-                const matchesLanguage = languageFilter ? (course.language && course.language.includes(languageFilter)) : true;
-
-                return matchesSearch && matchesTopic && matchesFee&&matchesLanguage;
-            });
-
-            displayCourses(filteredCourses);
-        }
-
-        // Add event listeners for real-time filtering
-        document.getElementById('searchInput').addEventListener('input', filterCourses);
-        document.getElementById('topicFilter').addEventListener('change', filterCourses);
-        document.getElementById('feeFilter').addEventListener('change', filterCourses);
-        document.getElementById('languageFilter').addEventListener('change', filterCourses);
-
-        // Initial display of all courses
-        displayCourses(courses);
-    </script>
 
     <!-- Footer -->
     <footer class="footer">
@@ -321,6 +420,109 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
+
+        const courses = [
+            {
+                title: "Lập trình Web cơ bản",
+                description: "Khóa học lập trình web cơ bản dành cho người mới bắt đầu.",
+                topic: "web",
+                fee: "free",
+                language: ["HTML", "CSS", "JavaScript"],
+                image: "/images/course1.jpg"
+            },
+            {
+                title: "Lập trình Mobile nâng cao",
+                description: "Khóa học lập trình mobile nâng cao với các công nghệ mới nhất.",
+                topic: "mobile",
+                fee: "paid",
+                language: ["Java", "Kotlin"],
+                image: "/images/course2.jpg"
+            },
+            {
+                title: "Khoa học dữ liệu cơ bản",
+                description: "Khóa học khoa học dữ liệu cơ bản dành cho người mới bắt đầu.",
+                topic: "data",
+                fee: "free",
+                language: ["Python", "SQL"],
+                image: "/images/course3.jpg"
+            },
+            {
+                title: "Phân tích dữ liệu nâng cao",
+                description: "Khóa học phân tích dữ liệu chuyên sâu với R và Python.",
+                topic: "data",
+                fee: "paid",
+                language: ["Python", "R"],
+                image: "/images/course4.jpg"
+            }
+        ];
+
+        function displayCourses(filteredCourses) {
+            const courseGrid = document.getElementById('courseGrid');
+            courseGrid.innerHTML = '';
+
+            filteredCourses.forEach(course => {
+                const courseCard = `
+                    <div class="col" data-aos="fade-up">
+                        <div class="card h-100">
+                            <img src="${course.image}" class="card-img-top" alt="${course.title}">
+                            <div class="card-body">
+                                <h5 class="card-title">${course.title}</h5>
+                                <p class="card-text">${course.description}</p>
+                                <p class="text-muted">
+                                    <i class="fas fa-folder-open me-2"></i>${course.topic}
+                                </p>
+                                <p class="text-muted">
+                                    <i class="fas fa-${course.fee === 'free' ? 'gift' : 'money-bill'} me-2"></i>
+                                    ${course.fee === 'free' ? 'Miễn phí' : 'Trả phí'}
+                                </p>
+                                <p class="text-muted">
+                                    <i class="fas fa-code me-2"></i>${course.language.join(', ')}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                courseGrid.innerHTML += courseCard;
+            });
+        }
+
+        function filterCourses() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const topicFilter = document.getElementById('topicFilter').value;
+            const feeFilter = document.getElementById('feeFilter').value;
+            const languageFilter = document.getElementById('languageFilter').value;
+
+            const filteredCourses = courses.filter(course => {
+                const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
+                                    course.description.toLowerCase().includes(searchTerm);
+                const matchesTopic = !topicFilter || course.topic === topicFilter;
+                const matchesFee = !feeFilter || course.fee === feeFilter;
+                const matchesLanguage = !languageFilter || course.language.includes(languageFilter);
+
+                return matchesSearch && matchesTopic && matchesFee && matchesLanguage;
+            });
+
+            displayCourses(filteredCourses);
+        }
+
+        // Add event listeners for real-time filtering
+        document.getElementById('searchInput').addEventListener('input', filterCourses);
+        document.getElementById('topicFilter').addEventListener('change', filterCourses);
+        document.getElementById('feeFilter').addEventListener('change', filterCourses);
+        document.getElementById('languageFilter').addEventListener('change', filterCourses);
+
+        // Initial display of all courses
+        displayCourses(courses);
+
+        // Handle navbar scrolling effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 </html>
