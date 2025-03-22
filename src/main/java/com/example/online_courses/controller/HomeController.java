@@ -11,11 +11,6 @@ public class HomeController {
         return "home"; // Trả về home.html
     }
 
-    @GetMapping("/courses")
-    public String courses() {
-        return "courses"; // Trả về courses.html (nếu có)
-    }
-
     @GetMapping("/news")
     public String news() {
         return "news"; // Trả về news.html (nếu có)

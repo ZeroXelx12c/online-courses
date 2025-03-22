@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ - Học Lập trình Online</title>
+    <title>Khóa học - Học Lập trình Online</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -258,31 +258,12 @@
 
         /* Responsive Styles */
         @media (max-width: 768px) {
-            .navbar-brand { 
-                font-size: 24px; 
-            }
-            
-            .nav-link { 
-                margin: 8px 0; 
-            }
-            
-            .btn-custom, .btn-outline { 
-                width: 100%; 
-                margin: 5px 0;
-            }
-            
-            .search-filter-section {
-                padding: 20px;
-            }
-            
-            .form-select {
-                width: 100% !important;
-                margin-bottom: 10px;
-            }
-            
-            .hero {
-                height: 150px;
-            }
+            .navbar-brand { font-size: 24px; }
+            .nav-link { margin: 8px 0; }
+            .btn-custom, .btn-outline { width: 100%; margin: 5px 0; }
+            .search-filter-section { padding: 20px; }
+            .form-select { width: 100% !important; margin-bottom: 10px; }
+            .hero { height: 150px; }
         }
     </style>
 </head>
@@ -296,21 +277,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dskhoahoc.html">Khóa học</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/news.html">Tin tức</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/courses">Khóa học</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/news">Tin tức</a></li>
                 </ul>
                 <div class="ms-3">
                     <span sec:authorize="isAuthenticated()" class="me-2">
                         Xin chào <span th:text="${#authentication.name}" class="fw-bold text-primary"></span>
                     </span>
-                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-custom">Đăng xuất</a>
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display: inline;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-custom">Đăng xuất</button>
+                    </form>
                     <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-custom">Đăng nhập</a>
                     <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline">Đăng ký</a>
                 </div>
@@ -319,8 +297,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-    </section>
+    <section class="hero"></section>
 
     <!-- Search and Filter Section -->
     <section class="search-filter-section">
@@ -328,13 +305,13 @@
             <!-- Search Bar -->
             <div class="row mb-4">
                 <div class="col-md-8 offset-md-2">
-                    <form class="d-flex" id="searchForm" data-aos="fade-up">
-                        <input class="form-control" type="search" id="searchInput" placeholder="Tìm kiếm khóa học..." aria-label="Search">
+                    <form class="d-flex" id="searchForm" th:action="@{/courses}" method="get" data-aos="fade-up">
+                        <input class="form-control" type="search" id="searchInput" name="search" placeholder="Tìm kiếm khóa học..." aria-label="Search">
                     </form>
                 </div>
             </div>
 
-            <!-- Filter Bar -->
+            <!-- Filter Bar (Tạm thời giữ tĩnh, có thể nâng cấp sau) -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-flex justify-content-center flex-wrap gap-3" id="filterBar">
@@ -372,7 +349,24 @@
     <section class="course-grid-section">
         <div class="container">
             <div class="row row-cols-1 row-cols-md-3 g-4" id="courseGrid">
-                <!-- Course Cards will be dynamically populated here -->
+                <div class="col" th:each="course : ${courses}" data-aos="fade-up">
+                    <div class="card h-100">
+                        <img th:src="${course.thumbnailUrl}" class="card-img-top" alt="Thumbnail" th:unless="${course.thumbnailUrl == null}" />
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${course.title}"></h5>
+                            <p class="card-text" th:text="${course.description}"></p>
+                            <p class="text-muted">
+                                <i class="fas fa-user-tie me-2"></i>
+                                <span th:text="${course.instructor.fullName}"></span>
+                            </p>
+                            <p class="text-muted">
+                                <i class="fas fa-money-bill me-2"></i>
+                                <span th:text="${course.price == 0 ? 'Miễn phí' : course.price + ' VNĐ'}"></span>
+                            </p>
+                            <a th:href="@{/courses/{id}(id=${course.courseId})}" class="btn btn-custom">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -420,99 +414,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
-
-        const courses = [
-            {
-                title: "Lập trình Web cơ bản",
-                description: "Khóa học lập trình web cơ bản dành cho người mới bắt đầu.",
-                topic: "web",
-                fee: "free",
-                language: ["HTML", "CSS", "JavaScript"],
-                image: "/images/course1.jpg"
-            },
-            {
-                title: "Lập trình Mobile nâng cao",
-                description: "Khóa học lập trình mobile nâng cao với các công nghệ mới nhất.",
-                topic: "mobile",
-                fee: "paid",
-                language: ["Java", "Kotlin"],
-                image: "/images/course2.jpg"
-            },
-            {
-                title: "Khoa học dữ liệu cơ bản",
-                description: "Khóa học khoa học dữ liệu cơ bản dành cho người mới bắt đầu.",
-                topic: "data",
-                fee: "free",
-                language: ["Python", "SQL"],
-                image: "/images/course3.jpg"
-            },
-            {
-                title: "Phân tích dữ liệu nâng cao",
-                description: "Khóa học phân tích dữ liệu chuyên sâu với R và Python.",
-                topic: "data",
-                fee: "paid",
-                language: ["Python", "R"],
-                image: "/images/course4.jpg"
-            }
-        ];
-
-        function displayCourses(filteredCourses) {
-            const courseGrid = document.getElementById('courseGrid');
-            courseGrid.innerHTML = '';
-
-            filteredCourses.forEach(course => {
-                const courseCard = `
-                    <div class="col" data-aos="fade-up">
-                        <div class="card h-100">
-                            <img src="${course.image}" class="card-img-top" alt="${course.title}">
-                            <div class="card-body">
-                                <h5 class="card-title">${course.title}</h5>
-                                <p class="card-text">${course.description}</p>
-                                <p class="text-muted">
-                                    <i class="fas fa-folder-open me-2"></i>${course.topic}
-                                </p>
-                                <p class="text-muted">
-                                    <i class="fas fa-${course.fee === 'free' ? 'gift' : 'money-bill'} me-2"></i>
-                                    ${course.fee === 'free' ? 'Miễn phí' : 'Trả phí'}
-                                </p>
-                                <p class="text-muted">
-                                    <i class="fas fa-code me-2"></i>${course.language.join(', ')}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                courseGrid.innerHTML += courseCard;
-            });
-        }
-
-        function filterCourses() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const topicFilter = document.getElementById('topicFilter').value;
-            const feeFilter = document.getElementById('feeFilter').value;
-            const languageFilter = document.getElementById('languageFilter').value;
-
-            const filteredCourses = courses.filter(course => {
-                const matchesSearch = course.title.toLowerCase().includes(searchTerm) || 
-                                    course.description.toLowerCase().includes(searchTerm);
-                const matchesTopic = !topicFilter || course.topic === topicFilter;
-                const matchesFee = !feeFilter || course.fee === feeFilter;
-                const matchesLanguage = !languageFilter || course.language.includes(languageFilter);
-
-                return matchesSearch && matchesTopic && matchesFee && matchesLanguage;
-            });
-
-            displayCourses(filteredCourses);
-        }
-
-        // Add event listeners for real-time filtering
-        document.getElementById('searchInput').addEventListener('input', filterCourses);
-        document.getElementById('topicFilter').addEventListener('change', filterCourses);
-        document.getElementById('feeFilter').addEventListener('change', filterCourses);
-        document.getElementById('languageFilter').addEventListener('change', filterCourses);
-
-        // Initial display of all courses
-        displayCourses(courses);
 
         // Handle navbar scrolling effect
         window.addEventListener('scroll', () => {
