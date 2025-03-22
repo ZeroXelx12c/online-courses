@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý người dùng - Học Lập trình Online</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
@@ -21,188 +18,41 @@
             --gray-800: #333;
         }
 
-        body {
-            background-color: var(--gray-100);
-            color: var(--gray-800);
-            font-family: 'Montserrat', sans-serif;
-            padding-top: 80px;
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 15px 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar.scrolled {
-            padding: 10px 0;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary-color) !important;
-        }
-
-        .nav-link {
-            color: var(--gray-800) !important;
-            margin: 0 15px;
-            position: relative;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            left: 0;
-            bottom: -5px;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        /* Buttons */
-        .btn-custom {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 12px 30px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-custom:hover {
-            background-color: #218838;
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-
-        .btn-action {
-            padding: 6px 12px;
-            font-size: 0.9rem;
-            border-radius: 20px;
-            margin-right: 5px;
-        }
-
-        .btn-edit {
-            background-color: #ffc107;
-            border: none;
-            color: var(--white);
-        }
-
-        .btn-delete {
-            background-color: #dc3545;
-            border: none;
-            color: var(--white);
-        }
-
-        /* Users Section */
-        .users-section {
-            padding: 40px 0;
-        }
-
-        .users-table {
-            background: var(--white);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .users-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .users-table th, .users-table td {
-            padding: 15px;
-            text-align: left;
-        }
-
-        .users-table th {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-
-        .users-table tr:nth-child(even) {
-            background-color: var(--gray-100);
-        }
-
-        .users-table td {
-            vertical-align: middle;
-        }
-
-        /* Footer */
-        .footer {
-            background-color: var(--secondary-color);
-            padding: 60px 0 20px;
-            color: var(--white);
-            margin-top: 60px;
-        }
-
-        .footer-title {
-            color: var(--primary-color);
-            margin-bottom: 25px;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .footer-content p {
-            color: #888;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: #888;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
-            padding: 4px 0;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-color);
-            transform: translateX(5px);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .social-links a {
-            color: #888;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            padding: 8px;
-        }
-
-        .social-links a:hover {
-            color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 25px;
-            margin-top: 40px;
-            border-top: 1px solid #333;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
+        body { background-color: var(--gray-100); color: var(--gray-800); font-family: 'Montserrat', sans-serif; padding-top: 80px; }
+        .navbar { background-color: rgba(255, 255, 255, 0.95); padding: 15px 0; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+        .navbar.scrolled { padding: 10px 0; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
+        .navbar-brand { font-size: 28px; font-weight: 700; color: var(--primary-color) !important; }
+        .nav-link { color: var(--gray-800) !important; margin: 0 15px; position: relative; font-weight: 500; transition: all 0.3s ease; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; background: var(--primary-color); left: 0; bottom: -5px; transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+        .btn-custom { background-color: var(--primary-color); color: var(--white); padding: 12px 30px; border-radius: 30px; border: none; font-weight: 500; transition: all 0.3s ease; }
+        .btn-custom:hover { background-color: #218838; color: var(--white); transform: translateY(-2px); }
+        .btn-action { padding: 6px 12px; font-size: 0.9rem; border-radius: 20px; margin-right: 5px; }
+        .btn-edit { background-color: #ffc107; border: none; color: var(--white); }
+        .btn-delete { background-color: #dc3545; border: none; color: var(--white); }
+        .users-section { padding: 40px 0; }
+        .users-table { background: var(--white); border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); padding: 20px; }
+        .users-table table { width: 100%; border-collapse: collapse; }
+        .users-table th, .users-table td { padding: 15px; text-align: left; }
+        .users-table th { background-color: var(--primary-color); color: var(--white); }
+        .users-table tr:nth-child(even) { background-color: var(--gray-100); }
+        .users-table td { vertical-align: middle; }
+        .pagination { margin-top: 20px; justify-content: center; }
+        .page-item.active .page-link { background-color: var(--primary-color); border-color: var(--primary-color); }
+        .page-link { color: var(--primary-color); }
+        .page-link:hover { color: var(--white); background-color: #218838; border-color: #218838; }
+        .search-form { margin-bottom: 20px; }
+        .form-control { border-radius: 30px; padding: 10px 20px; border: 1px solid var(--gray-200); transition: all 0.3s ease; }
+        .form-control:focus { box-shadow: 0 0 0 0.2rem rgba(37, 142, 1, 0.25); border-color: var(--primary-color); }
+        .footer { background-color: var(--secondary-color); padding: 60px 0 20px; color: var(--white); margin-top: 60px; }
+        .footer-title { color: var(--primary-color); margin-bottom: 25px; font-size: 1.2rem; font-weight: 600; }
+        .footer-content p { color: #888; line-height: 1.6; margin-bottom: 20px; }
+        .footer-links a { color: #888; text-decoration: none; display: block; margin-bottom: 12px; transition: all 0.3s ease; padding: 4px 0; }
+        .footer-links a:hover { color: var(--primary-color); transform: translateX(5px); }
+        .social-links { display: flex; gap: 20px; }
+        .social-links a { color: #888; font-size: 1.5rem; transition: all 0.3s ease; padding: 8px; }
+        .social-links a:hover { color: var(--primary-color); transform: translateY(-3px); }
+        .copyright { text-align: center; padding-top: 25px; margin-top: 40px; border-top: 1px solid #333; color: #888; font-size: 0.9rem; }
         @media (max-width: 768px) {
             .navbar-brand { font-size: 24px; }
             .nav-link { margin: 8px 0; }
@@ -252,6 +102,11 @@
                 </span>
             </div>
             <div class="users-table" data-aos="fade-up">
+                <!-- Form tìm kiếm -->
+                <form th:action="@{/admin/users}" method="get" class="search-form d-flex">
+                    <input class="form-control me-2" type="text" name="search" th:value="${search}" placeholder="Tìm kiếm email hoặc họ tên...">
+                    <button class="btn btn-custom" type="submit">Tìm</button>
+                </form>
                 <div class="mb-3">
                     <a th:href="@{/admin/users/add}" class="btn btn-custom">Thêm người dùng mới</a>
                 </div>
@@ -285,6 +140,21 @@
                         </tr>
                     </tbody>
                 </table>
+                <!-- Phân trang -->
+                <nav class="pagination" th:if="${totalPages > 1}">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/users(page=${currentPage - 1}, size=${pageSize}, search=${search})}">Trước</a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+                            <a class="page-link" th:href="@{/admin/users(page=${i}, size=${pageSize}, search=${search})}" th:text="${i + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/users(page=${currentPage + 1}, size=${pageSize}, search=${search})}">Sau</a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="text-muted mt-2">Tổng cộng: <span th:text="${totalItems}"></span> người dùng</p>
             </div>
         </div>
     </section>
