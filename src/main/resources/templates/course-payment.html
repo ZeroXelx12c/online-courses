@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán khóa học - Học Lập trình Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #258e01;
+            --secondary-color: #1a1a1a;
+            --white: #fff;
+            --gray-100: #f8f9fa;
+            --gray-600: #666;
+            --gray-800: #333;
+        }
+
+        body {
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            font-family: 'Montserrat', sans-serif;
+            padding-top: 80px;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            color: var(--gray-800) !important;
+            margin: 0 15px;
+            position: relative;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .payment-section {
+            padding: 60px 0;
+            min-height: 100vh;
+        }
+
+        .payment-card {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .course-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .course-price {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .form-select {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 142, 1, 0.25);
+        }
+
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #218838;
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: var(--secondary-color);
+            padding: 60px 0 20px;
+            color: var(--white);
+            margin-top: 60px;
+        }
+
+        .footer-title {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .footer-content p {
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #888;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #888;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            margin-top: 40px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .course-title {
+                font-size: 1.5rem;
+            }
+            .course-price {
+                font-size: 1.2rem;
+            }
+            .btn-custom {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">HỌC LẬP TRÌNH</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/courses">Khóa học</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/news">Tin tức</a></li>
+                </ul>
+                <div class="ms-3">
+                    <span sec:authorize="isAuthenticated()" class="me-2">
+                        Xin chào <span th:text="${#authentication.name}" class="fw-bold text-primary"></span>
+                    </span>
+                    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display: inline;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-custom">Đăng xuất</button>
+                    </form>
+                    <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-custom">Đăng nhập</a>
+                    <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-outline">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Payment Section -->
+    <section class="payment-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="payment-card" data-aos="fade-up">
+                        <h1 class="course-title" th:text="${course.title}"></h1>
+                        <p class="course-price" th:text="${course.price + ' VNĐ'}"></p>
+                        
+                        <!-- Thông báo lỗi (nếu có) -->
+                        <div th:if="${error}" class="error-message" th:text="${error}"></div>
+
+                        <!-- Form thanh toán -->
+                        <form th:action="@{/courses/{id}/purchase(id=${course.courseId})}" method="post" data-aos="fade-up" data-aos-delay="200">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <div class="mb-3">
+                                <label for="paymentMethod" class="form-label">Phương thức thanh toán</label>
+                                <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                                    <option value="" disabled selected>Chọn phương thức</option>
+                                    <option value="Momo">Momo</option>
+                                    <option value="BankCard">Thẻ ngân hàng</option>
+                                </select>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom">
+                                    <i class="fas fa-credit-card"></i> Thanh toán
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Về chúng tôi</h3>
+                        <p>Học Lập trình Online - Nơi chắp cánh ước mơ lập trình viên với các khóa học chất lượng cao.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Liên kết nhanh</h3>
+                        <div class="footer-links">
+                            <a href="/courses">Khóa học</a>
+                            <a href="/news">Tin tức</a>
+                            <a href="/register">Đăng ký</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-content">
+                        <h3 class="footer-title">Kết nối</h3>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Học Lập trình Online. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

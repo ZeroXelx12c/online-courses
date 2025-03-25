@@ -28,7 +28,6 @@ public class CourseService {
         course.setTitle(title);
         course.setDescription(description);
         course.setPrice(price != null ? price : BigDecimal.ZERO);
-        course.setInstructor(instructor);
         course.setThumbnailUrl(thumbnailUrl);
         return courseRepository.save(course);
     }
