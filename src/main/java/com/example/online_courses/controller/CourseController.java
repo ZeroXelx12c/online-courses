@@ -3,9 +3,11 @@ package com.example.online_courses.controller;
 import com.example.online_courses.entity.Course;
 import com.example.online_courses.entity.Lesson;
 import com.example.online_courses.entity.Purchase;
+import com.example.online_courses.entity.User;
 import com.example.online_courses.repository.CourseRepository;
 import com.example.online_courses.repository.LessonRepository;
 import com.example.online_courses.repository.PurchaseRepository;
+import com.example.online_courses.repository.UserRepository;
 import com.example.online_courses.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,28 +40,37 @@ public class CourseController {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
-    @GetMapping // Ánh xạ tới "/courses"
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping
     public String listCourses(Model model) {
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
-        return "courses"; // Trả về template courses.html
+        return "courses";
     }
 
-    @GetMapping("/{courseId}") // Ánh xạ tới "/courses/{courseId}"
+    @GetMapping("/{courseId}")
     public String courseDetail(@PathVariable UUID courseId, Model model) {
         Course course = courseService.getCourseById(courseId);
         model.addAttribute("course", course);
-        return "course-detail"; // Trả về template course-detail.html
+        return "course-detail";
     }
 
-    @GetMapping("/{id}/learn") // Ánh xạ tới "/courses/{id}/learn"
+    @GetMapping("/{id}/learn")
     @PreAuthorize("isAuthenticated()")
     public String learnCourse(@PathVariable("id") UUID id, Model model) {
         Course course = courseRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
         
+        // Lấy email người dùng hiện tại
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Tìm User theo email để lấy userId
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         boolean hasAccess = course.getPrice().equals(BigDecimal.ZERO) || purchaseRepository.existsByUserIdAndCourseIdAndStatus(
-            UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName()), 
+            user.getUserId(), 
             id, 
             "completed"
         );
@@ -67,13 +78,14 @@ public class CourseController {
             return "redirect:/courses/" + id + "/payment";
         }
 
-        List<Lesson> lessons = lessonRepository.findByCourseIdOrderByOrderNumberAsc(id);
+        // Sửa phương thức gọi để khớp với LessonRepository
+        List<Lesson> lessons = lessonRepository.findByCourseCourseIdOrderByOrderIndexAsc(id);
         model.addAttribute("course", course);
         model.addAttribute("lessons", lessons);
         return "course-learn";
     }
 
-    @GetMapping("/{id}/payment") // Ánh xạ tới "/courses/{id}/payment"
+    @GetMapping("/{id}/payment")
     @PreAuthorize("isAuthenticated()")
     public String getPaymentPage(@PathVariable("id") UUID id, Model model) {
         Course course = courseRepository.findById(id)
@@ -82,14 +94,20 @@ public class CourseController {
         return "course-payment";
     }
 
-    @PostMapping("/{id}/purchase") // Ánh xạ tới "/courses/{id}/purchase"
+    @PostMapping("/{id}/purchase")
     @PreAuthorize("isAuthenticated()")
     public String processPurchase(@PathVariable("id") UUID id, @RequestParam("paymentMethod") String paymentMethod, Model model) {
         Course course = courseRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid course ID"));
 
+        // Lấy email người dùng hiện tại
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        // Tìm User theo email để lấy userId
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         Purchase purchase = new Purchase();
-        purchase.setUserId(UUID.fromString(SecurityContextHolder.getContext().getAuthentication().getName()));
+        purchase.setUserId(user.getUserId());
         purchase.setCourseId(id);
         purchase.setAmount(course.getPrice());
         purchase.setPaymentMethod(paymentMethod);

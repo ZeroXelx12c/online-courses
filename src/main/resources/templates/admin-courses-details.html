@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý người dùng - Học Lập trình Online</title>
+    <title>Quản lý bài học - Học Lập trình Online</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -30,13 +30,13 @@
         .btn-action { padding: 6px 12px; font-size: 0.9rem; border-radius: 20px; margin-right: 5px; }
         .btn-edit { background-color: #ffc107; border: none; color: var(--white); }
         .btn-delete { background-color: #dc3545; border: none; color: var(--white); }
-        .users-section { padding: 40px 0; }
-        .users-table { background: var(--white); border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); padding: 20px; }
-        .users-table table { width: 100%; border-collapse: collapse; }
-        .users-table th, .users-table td { padding: 15px; text-align: left; }
-        .users-table th { background-color: var(--primary-color); color: var(--white); }
-        .users-table tr:nth-child(even) { background-color: var(--gray-100); }
-        .users-table td { vertical-align: middle; }
+        .courses-section { padding: 40px 0; }
+        .courses-table { background: var(--white); border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); padding: 20px; }
+        .courses-table table { width: 100%; border-collapse: collapse; }
+        .courses-table th, .courses-table td { padding: 15px; text-align: left; }
+        .courses-table th { background-color: var(--primary-color); color: var(--white); }
+        .courses-table tr:nth-child(even) { background-color: var(--gray-100); }
+        .courses-table td { vertical-align: middle; }
         .pagination { margin-top: 20px; justify-content: center; }
         .page-item.active .page-link { background-color: var(--primary-color); border-color: var(--primary-color); }
         .page-link { color: var(--primary-color); }
@@ -57,7 +57,7 @@
             .navbar-brand { font-size: 24px; }
             .nav-link { margin: 8px 0; }
             .btn-custom { width: 100%; margin: 5px 0; }
-            .users-table { overflow-x: auto; }
+            .courses-table { overflow-x: auto; }
             .btn-action { width: 100%; margin: 5px 0; }
         }
     </style>
@@ -90,50 +90,59 @@
         </div>
     </nav>
 
-    <!-- Users Section -->
-    <section class="users-section">
+    <!-- Lessons Section -->
+    <section class="courses-section">
         <div class="container">
-            <h2 class="mb-5" data-aos="fade-up">Quản lý người dùng</h2>
+            <h2 class="mb-5" data-aos="fade-up">Quản lý bài học</h2>
             <!-- Thông báo -->
             <div th:if="${param.success}" class="alert alert-success" data-aos="fade-up">
                 <span th:switch="${param.success}">
-                    <span th:case="'add'">Thêm người dùng thành công!</span>
-                    <span th:case="'edit'">Cập nhật người dùng thành công!</span>
-                    <span th:case="'delete'">Xóa người dùng thành công!</span>
+                    <span th:case="'add'">Thêm bài học thành công!</span>
+                    <span th:case="'edit'">Cập nhật bài học thành công!</span>
+                    <span th:case="'delete'">Xóa bài học thành công!</span>
                 </span>
             </div>
-            <div class="users-table" data-aos="fade-up">
+            <div class="courses-table" data-aos="fade-up">
                 <!-- Form tìm kiếm -->
-                <form th:action="@{/admin/users}" method="get" class="search-form d-flex">
-                    <input class="form-control me-2" type="text" name="search" th:value="${search}" placeholder="Tìm kiếm email hoặc họ tên...">
+                <form th:action="@{/admin/courses-details}" method="get" class="search-form d-flex">
+                    <input class="form-control me-2" type="text" name="search" th:value="${search}" placeholder="Tìm kiếm tiêu đề bài học...">
                     <button class="btn btn-custom" type="submit">Tìm</button>
                 </form>
-                <div class="mb-3">
-                    <a th:href="@{/admin/users/add}" class="btn btn-custom">Thêm người dùng mới</a>
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-custom dropdown-toggle" type="button" id="addLessonDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Thêm bài học mới
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="addLessonDropdown">
+                            <li th:each="course : ${courses}">
+                                <a class="dropdown-item" th:href="@{/admin/courses/{id}/lessons/add(id=${course.courseId})}" th:text="${course.title}"></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <table>
                     <thead>
                         <tr>
-                            <th>Email</th>
-                            <th>Họ tên</th>
-                            <th>Vai trò</th>
-                            <th>Ngày tạo</th>
+                            <th>Tiêu đề</th>
+                            <th>Video URL</th>
+                            <th>Thứ tự</th>
+                            <th>Khóa học</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.email}"></td>
-                            <td th:text="${user.fullName}"></td>
-                            <td th:text="${user.role}"></td>
-                            <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                        <tr th:each="lesson : ${lessons}">
+                            <td th:text="${lesson.title}"></td>
+                            <td th:text="${lesson.videoUrl}"></td>
+                            <td th:text="${lesson.orderIndex}"></td>
+                            <td th:text="${lesson.course.title}"></td>
                             <td>
-                                <a th:href="@{/admin/users/edit/{id}(id=${user.userId})}" class="btn btn-edit btn-action">
+                                <a th:href="@{/admin/courses/{courseId}/lessons/edit/{lessonId}(courseId=${lesson.course.courseId}, lessonId=${lesson.lessonId})}" class="btn btn-edit btn-action">
                                     <i class="fas fa-edit"></i> Sửa
                                 </a>
-                                <form th:action="@{/admin/users/delete/{id}(id=${user.userId})}" method="post" style="display: inline;">
+                                <form th:action="@{/admin/courses/{courseId}/lessons/delete/{lessonId}(courseId=${lesson.course.courseId}, lessonId=${lesson.lessonId})}" method="post" style="display: inline;">
                                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                                    <button type="submit" class="btn btn-delete btn-action" onclick="return confirm('Bạn có chắc muốn xóa người dùng này?')">
+                                    <button type="submit" class="btn btn-delete btn-action" onclick="return confirm('Bạn có chắc muốn xóa bài học này?')">
                                         <i class="fas fa-trash"></i> Xóa
                                     </button>
                                 </form>
@@ -145,17 +154,17 @@
                 <nav class="pagination" th:if="${totalPages > 1}">
                     <ul class="pagination">
                         <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                            <a class="page-link" th:href="@{/admin/users(page=${currentPage - 1}, size=${pageSize}, search=${search})}">Trước</a>
+                            <a class="page-link" th:href="@{/admin/courses-details(page=${currentPage - 1}, size=${pageSize}, search=${search})}">Trước</a>
                         </li>
                         <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
-                            <a class="page-link" th:href="@{/admin/users(page=${i}, size=${pageSize}, search=${search})}" th:text="${i + 1}"></a>
+                            <a class="page-link" th:href="@{/admin/courses-details(page=${i}, size=${pageSize}, search=${search})}" th:text="${i + 1}"></a>
                         </li>
                         <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                            <a class="page-link" th:href="@{/admin/users(page=${currentPage + 1}, size=${pageSize}, search=${search})}">Sau</a>
+                            <a class="page-link" th:href="@{/admin/courses-details(page=${currentPage + 1}, size=${pageSize}, search=${search})}">Sau</a>
                         </li>
                     </ul>
                 </nav>
-                <p class="text-muted mt-2">Tổng cộng: <span th:text="${totalItems}"></span> người dùng</p>
+                <p class="text-muted mt-2">Tổng cộng: <span th:text="${totalItems}"></span> bài học</p>
             </div>
         </div>
     </section>
